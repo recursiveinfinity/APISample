@@ -1,7 +1,11 @@
 package com.example.apisample
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import com.example.apisample.iss.ISSActivity
+import com.example.apisample.iss.ISSResponse
+import com.example.apisample.iss.ISSService
 import kotlinx.android.synthetic.main.activity_main.*
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -28,7 +32,7 @@ class MainActivity : AppCompatActivity() {
 
 
         val retrofitBuilder = Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(BASE_URL_ISS)
             .addConverterFactory(GsonConverterFactory.create())
 
         val retrofit = retrofitBuilder
@@ -37,7 +41,9 @@ class MainActivity : AppCompatActivity() {
 
         val gitHubClient = retrofit.create(GithubService::class.java)
 
-        btnSubmit.setOnClickListener {
+        val issClient = retrofit.create(ISSService::class.java)
+
+        /*btnSubmit.setOnClickListener {
             gitHubClient.getUserDetails(etInput.text.toString()).enqueue(object : Callback<GithubUser> {
                 override fun onFailure(call: Call<GithubUser>, throwable: Throwable) {
                     throwable.printStackTrace()
@@ -50,7 +56,13 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             })
+        }*/
+
+        btnSubmit.setOnClickListener {
+           startActivity(Intent(this, ISSActivity::class.java))
         }
+
+
 
 
 
